@@ -12,7 +12,7 @@ func _unhandled_input(event : InputEvent):
 		rotation.y = wrapf(rotation.y, 0.0 , TAU)
 		
 		rotation.x -= event.relative.y * mouse_speed
-		rotation.x = clampf(rotation.x, -PI/2 , PI/4)
+		rotation.x = clamp(rotation.x, -PI/2 , PI/4)
 		
 	if Input.is_action_just_pressed("menu") :
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -20,7 +20,7 @@ func _unhandled_input(event : InputEvent):
 		else:
 			capture_mouse()
 	if Input.is_action_just_pressed("exit") :
-		get_tree().quit() # func kys
+		get_tree().quit() # kys func 
 
 	
 

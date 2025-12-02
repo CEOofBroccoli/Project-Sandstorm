@@ -16,13 +16,17 @@ extends CharacterBody3D
 @export var sidestep_velocity : float = 10
 
 
-@onready var camera_3d = %Camera3D
+@onready var camera = %Camera3D
 @onready var collision_3d = $CollisionShape3D
-#@onready var dash_sound = $"Ultrakill DashSound"
+@onready var state_machine = %"State Machine"
+
+
+var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var look_rotation : Vector3
 var input_directions : Vector2
 var move_directions : Vector3
+var direction 
 
 ##collision check
 #func _on_body_entered(body):
@@ -30,26 +34,31 @@ var move_directions : Vector3
 		#var collisoned = int(body.collision_layer)
 		#print("Hit something on mask " + collisoned)
 
-func _physics_process(delta: float) -> void:
-	if not is_on_floor() and has_gravity:
-		velocity += get_gravity() * gravity_speed * delta
-	#if can_dash and Input.is_action_just_pressed("dash"): ## add a full can_dash_check function
-		#if is_on_floor():
-			#var look_dir = - camera_3d.get_global_rotation()
-			#print(look_dir)
-#
-			#velocity += look_dir.normalized() * dash_velocity * 2
-			#print("dash")
-			##dash_sound.play()
-	#
-	input_directions = Input.get_vector("left", "right", "forward", "backward")
-	move_directions = (transform.basis * Vector3(input_directions.x, 0, input_directions.y)).normalized() ## make it 3D
-	if move_directions:
-		velocity.x = move_directions.x * move_speed
-		velocity.z = move_directions.z * move_speed
+func _process(delta: float) -> void:
+
+	velocity += get_gravity() 
+	
+	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	direction = direction.rotated(Vector3.UP, camera.global_rotation.y)
+	if direction:
+		velocity.x = direction.x * move_speed
+		velocity.z = direction.z * move_speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, move_speed)
+		velocity.z = move_toward(velocity.z, 0, move_speed)
 		
+	jump()
 	move_and_slide()
 
+
+func current_state() :
+	return state_machine.current_state.name
+
+func jump() -> void:
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y += 30
 
 func dash() -> void:
 	pass
