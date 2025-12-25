@@ -4,6 +4,7 @@ extends Node
 
 signal Transitioned
 
+var player : Node
 
 func Enter():
 	pass

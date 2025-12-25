@@ -8,4 +8,10 @@ func _ready():
 
 
 func _process(delta):
-	self.text = "Velocity: %s\nState: %s" % [player.velocity, player.current_state()]
+	self.text = " Velocity: %s\n Pos: %s \n State: %s  \n Dash: %s" % [
+		player.velocity , 
+		player.global_position ,
+		player.current_state() ,
+		player.dash_timer
+		
+	]

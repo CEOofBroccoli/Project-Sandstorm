@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c83nymukal17t"]
+[gd_scene load_steps=10 format=3 uid="uid://c83nymukal17t"]
 
 [ext_resource type="Script" uid="uid://7napedfbsfqf" path="res://Scripts/Player.gd" id="1_v0iea"]
 [ext_resource type="Script" uid="uid://bsx640r126eu8" path="res://Scripts/spring_arm_3d.gd" id="2_cvnsp"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://chm1abtq7g8t1" path="res://Scripts/States/idle.gd" id="4_vgqql"]
 [ext_resource type="Script" uid="uid://blfvbacobmamv" path="res://Scripts/States/walk.gd" id="5_fkybt"]
 [ext_resource type="Script" uid="uid://cnnr4eci1ei7m" path="res://Scripts/States/jump.gd" id="6_3smsa"]
-[ext_resource type="Material" uid="uid://bb43ngplsfis2" path="res://addons/flexible_toon_shader/FlexibleToonMaterial.tres" id="7_3smsa"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x3wgy"]
 
@@ -16,7 +15,6 @@
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_v0iea")
-dash_speed = 20.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_x3wgy")
@@ -50,8 +48,7 @@ script = ExtResource("6_3smsa")
 
 [node name="Fall" type="Node" parent="."]
 
-[node name="Wall" type="Node" parent="."]
+[node name="Wallrun" type="Node" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = ExtResource("7_3smsa")
 mesh = SubResource("CapsuleMesh_x3wgy")
